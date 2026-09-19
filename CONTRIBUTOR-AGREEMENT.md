@@ -91,10 +91,10 @@ Mandatory statutory rights remain unaffected.
 A Contributor does not grant the Project Steward an unrestricted right to:
 
 - sell the Contributor's Contribution as a software product;
-- license the Contributor's Contribution under proprietary or commercial software-license terms;
+- license the Contributor's Contribution under proprietary terms, or under terms that charge for the Software itself (Software Monetization under the Meowmarism License);
 - convert the Contributor's Contribution into proprietary software;
-- place the Contributor's Contribution behind paid access;
-- grant exclusive commercial rights over the Contribution;
+- place the Contributor's Contribution, as part of the Software itself, behind paid access (Software Monetization under the Meowmarism License);
+- grant exclusive rights over the Contribution that would restrict the rights of others under the Meowmarism License;
 - use the Contribution to sell or separately monetize the Software itself, including as a paid software product or as a paid service whose primary product is access to Meowmarism itself (Software Monetization under the Meowmarism License);
 - remove mandatory attribution;
 - pretend somebody else authored the Contribution.

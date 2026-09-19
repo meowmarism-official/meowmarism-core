@@ -10,7 +10,9 @@ Meowmarism is source-available software. Commercial use is permitted, but moneti
 
 "Modified Version" means any fork, adaptation, modification, derivative work, redistribution, community edition, custom build, or other work based on or containing material portions of the Software.
 
-"Distribution" means making the Software or a Modified Version available to another person or entity by any means, including repositories, releases, downloads, packages, installers, archives, binaries, mirrors, container images, hosted copies, or preinstalled systems.
+"Distribution" means giving a copy of the Software or a Modified Version to another person or entity by any means, including repositories, releases, downloads, packages, installers, archives, binaries, mirrors, container images, or preinstalled systems.
+
+Running the Software or a Modified Version on servers that you or your organization control, including servers that serve your own customers or users, is not Distribution as long as no copy is given to them. Modifications used only in that way do not have to be published. Section 6 (Software Monetization) and Sections 10 to 12 (naming of public-facing offerings) still apply to such use.
 
 "Corresponding Source" means the complete source code in the preferred form for making modifications, together with build scripts, dependency information, configuration templates, and other files reasonably necessary to build and modify the distributed version. Secrets, passwords, credentials, private keys, personal data, and other information that should reasonably remain confidential are excluded.
 
@@ -212,6 +214,8 @@ If the distribution format cannot reasonably contain CONTRIBUTORS.md, equivalent
 ## 10. Independent Versions Must Be Unofficial
 
 Every Modified Version distributed by anyone other than the official Meowmarism Project must be clearly and prominently identified as unofficial.
+
+Sections 10 to 12 also apply when an independent Modified Version is offered to the public, as a hosted service or in any other form, under a name that includes "Meowmarism", whether or not any copy is distributed. They do not apply to internal use.
 
 A normal user must be able to recognize that fact before downloading, installing, or during ordinary first use.
 
