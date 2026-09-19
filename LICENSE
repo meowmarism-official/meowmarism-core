@@ -12,7 +12,7 @@ Meowmarism is source-available software. Commercial use is permitted, but moneti
 
 "Distribution" means giving a copy of the Software or a Modified Version to another person or entity by any means, including repositories, releases, downloads, packages, installers, archives, binaries, mirrors, container images, or preinstalled systems.
 
-Running the Software or a Modified Version on servers that you or your organization control, including servers that serve your own customers or users, is not Distribution as long as no copy is given to them. Modifications used only in that way do not have to be published. Section 6 (Software Monetization) and Sections 10 to 12 (unofficial status, naming, and non-affiliation requirements) still apply to such use.
+Running the Software or a Modified Version on servers that you or your organization control, including servers that serve your own customers or users, is not Distribution as long as no copy is given to them. Modifications used only in that way do not have to be published. Section 6 (Software Monetization) and Sections 10 to 13 (unofficial status, naming, non-affiliation, and rebranding requirements) still apply to such use.
 
 "Corresponding Source" means the complete source code in the preferred form for making modifications, together with build scripts, dependency information, configuration templates, and other files reasonably necessary to build and modify the distributed version. Secrets, passwords, credentials, private keys, personal data, and other information that should reasonably remain confidential are excluded.
 
@@ -58,9 +58,9 @@ Every distributed version must:
 4. preserve the contributor record required by this License;
 5. make the Corresponding Source publicly available;
 6. clearly disclose that modifications were made;
-7. comply with the unofficial-version and naming requirements;
+7. comply with the unofficial-version, naming, non-affiliation, and rebranding requirements;
 8. not be distributed or offered in a manner constituting prohibited Software Monetization under Section 6;
-9. comply with the Project Rules that apply to that release under Section 14.
+9. comply with the Project Rules that apply to that release under Section 15.
 
 You may not relicense the Software or a Modified Version under another license.
 
@@ -145,7 +145,7 @@ A paid service whose primary product is access to Meowmarism itself, or to a sub
 
 Including the Software with hardware, hosting, or another product or service is not Software Monetization if the Software is not the primary product being sold and is not separately priced or separately gated.
 
-The requirements for Distribution in Sections 3 to 5 and 10 to 13 continue to apply to such bundles, including the requirement to make the Corresponding Source publicly available without payment.
+The requirements for Distribution in Sections 3 to 5 and 10 to 14 continue to apply to such bundles, including the requirement to make the Corresponding Source publicly available without payment.
 
 ### 6.6 Examples
 
@@ -255,17 +255,51 @@ Every independently distributed Modified Version must prominently state, in ordi
 
 Equivalent wording may be used only if the same meaning is immediately clear.
 
+A Modified Version that does not use "Meowmarism" in its name may instead state, for example:
+
+"Based on Meowmarism. Unofficial independent modified version. It is not developed, maintained, operated, supported, approved, sponsored, or endorsed by HexedMaya, the Project Steward, or the official Meowmarism Project."
+
+Section 13 applies to such versions in addition to this Section.
+
 Where reasonably applicable, this notice must appear on the repository or download page and in a user-facing location in the software such as the installer, startup interface, About page, Settings page, or equivalent location.
 
 No branding, domain, layout, description, or other presentation may reasonably mislead users into believing an independent version is official.
 
-## 13. Modification Disclosure
+## 13. Rebranded Modified Versions
+
+A Modified Version may use a different project, product, service, or brand name.
+
+Rebranding does not remove the attribution, disclosure, source-code, or non-affiliation requirements of this License.
+
+Every publicly distributed or publicly offered rebranded Modified Version must clearly and prominently state that it is based on Meowmarism. The notice must use wording such as "Based on Meowmarism" or "Fork of Meowmarism", or equivalent wording that makes the relationship immediately clear.
+
+This notice must appear at least:
+
+- on the primary repository, project, or download page;
+- in the README or equivalent primary documentation;
+- in an About, Credits, Legal, Settings, or equivalent user-facing location in the Software where reasonably applicable.
+
+A rebranded Modified Version must also:
+
+- preserve the original copyright notices;
+- preserve the contributor record required by this License;
+- credit the official Meowmarism Project and its contributors;
+- provide a reasonably accessible link or reference to the official Meowmarism Project;
+- clearly disclose that the version has been modified;
+- clearly state that it is an unofficial independent version;
+- not imply that it is developed, maintained, approved, sponsored, supported, or endorsed by the official Meowmarism Project.
+
+Changing the name, logo, colors, domain, repository name, package name, application title, or other branding does not remove these requirements.
+
+A rebranded Modified Version may not conceal its origin from Meowmarism or present Meowmarism-derived work as entirely original work.
+
+## 14. Modification Disclosure
 
 Modified Versions must clearly state that modifications have been made and provide a reasonable description of the major changes or differences from the official version.
 
 The disclosure must not imply that third-party modifications were made by HexedMaya or the official Meowmarism Project.
 
-## 14. Project Rules and Conduct
+## 15. Project Rules and Conduct
 
 Public distribution rights under this License are conditional on compliance with the Project Rules that apply to the release being distributed.
 
@@ -275,7 +309,7 @@ Only the version of the Project Rules expressly identified by version number, re
 
 A later Project Rule change does not retroactively alter rights already granted under an earlier version unless the affected party accepts the new terms or applicable law otherwise permits it.
 
-## 15. Non-Compliant Versions
+## 16. Non-Compliant Versions
 
 Where a distributed version materially violates this License or the applicable Project Rules, the Project Steward may require the distributor to:
 
@@ -286,6 +320,7 @@ Where a distributed version materially violates this License or the applicable P
 - restore required attribution;
 - restore required contributor records;
 - correct unofficial notices;
+- add the required "Based on Meowmarism" notice and credits;
 - stop prohibited Software Monetization;
 - otherwise bring the distribution into compliance.
 
@@ -293,7 +328,7 @@ Where legally available, the Project Steward may request that repositories, host
 
 This License does not guarantee that a third-party platform must comply with such a request.
 
-## 16. Termination
+## 17. Termination
 
 Rights granted to a party under this License automatically terminate while that party materially violates this License, subject to the cure rules below.
 
@@ -311,7 +346,7 @@ If the violation is repeated, or the violator knew of it and continued, rights a
 
 Downstream users who independently comply with this License do not lose their rights solely because an upstream distributor violated it.
 
-## 17. Project Succession and Permissions
+## 18. Project Succession and Permissions
 
 Control of the repository, domain, organization, servers, signing keys, package accounts, or project branding does not create ownership of contributors' work.
 
@@ -323,7 +358,7 @@ Only the current Project Steward may issue project-level permissions or exceptio
 
 No maintainer may grant rights in a contributor's work that the contributor did not grant to the project.
 
-## 18. No Warranty
+## 19. No Warranty
 
 THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY KIND, TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW.
 
@@ -333,7 +368,7 @@ Use of the Software is at your own risk.
 
 No maintainer or contributor is obligated to provide support, maintenance, updates, security fixes, compatibility fixes, documentation, or continued availability.
 
-## 19. Limitation of Liability
+## 20. Limitation of Liability
 
 To the maximum extent permitted by applicable law, the Project Steward, original authors, and contributors shall not be liable for damages, losses, claims, costs, or other liability arising from or relating to the Software or its use.
 
@@ -341,23 +376,23 @@ This includes data loss, corruption, downtime, lost revenue, lost profits, busin
 
 Nothing in this License excludes or limits liability where such exclusion or limitation is prohibited by applicable law.
 
-## 20. Severability
+## 21. Severability
 
 If any provision of this License is invalid, illegal, or unenforceable, the remaining provisions remain effective to the greatest extent permitted by law.
 
-## 21. No Waiver
+## 22. No Waiver
 
 Failure to enforce a provision in one case does not waive the right to enforce it later.
 
 Silence, knowledge of a use, or temporary tolerance does not create permission.
 
-## 22. Governing Law
+## 23. Governing Law
 
 To the extent permitted by applicable law, this License is governed by the laws of the Federal Republic of Germany.
 
 Mandatory provisions of applicable law remain unaffected.
 
-## 23. Entire License
+## 24. Entire License
 
 No README, issue, pull request, Discord message, email, conversation, documentation page, source comment, or other informal statement creates an exception unless it is a valid written permission issued by the Project Steward with every approval and right required by this License and the Contributor & Governance Agreement.
 
