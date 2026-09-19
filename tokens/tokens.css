@@ -1,0 +1,36 @@
+/* meowmarism design tokens. The products (LITE, PROFESSIONAL) and the website use exactly these values. */
+:root {
+  /* surfaces */
+  --bg: #101113;
+  --sidebar: #15171a;
+  --panel: #17191d;
+  --panel2: #1c1f23;
+  --line: #292d32;
+  --line2: #343940;
+
+  /* text */
+  --text: #e7e9ec;
+  --muted: #9299a3;
+  --muted2: #68707b;
+
+  /* brand and status */
+  --accent: #ff6fc4;
+  --blue: #5f9ee8;
+  --green: #58b978;
+  --yellow: #d4a84f;
+  --red: #d76767;
+
+  /* shape */
+  --radius: 6px;
+  --radius-modal: 10px;
+
+  /* navigation rail: icons are centered in a 56px rail, labels appear when it opens to 208px */
+  --sidebar-w: 56px;
+  --sidebar-open: 208px;
+  --icon: 18px;
+  --icon-stroke: 1.8;
+
+  /* the wordmark only; everything else uses the system UI font */
+  --font-ui: Inter, ui-sans-serif, -apple-system, "Segoe UI", sans-serif;
+  --font-brand: inherit;
+}
