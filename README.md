@@ -19,7 +19,7 @@ scripts/   sync.js copies the legal files (and optionally the design assets) int
 
 ## One place for the legal files
 
-`LICENSE`, `CONTRIBUTOR-AGREEMENT.md` and `CONTRIBUTORS.md` are edited **only here**. Every distribution has to contain a complete copy of the license, so the other repositories carry copies, but those copies are generated:
+`LICENSE`, `WEBSITE-LICENSE.md`, `BRAND-POLICY.md`, `CONTRIBUTOR-AGREEMENT.md` and `CONTRIBUTORS.md` are edited **only here**. Every distribution has to contain a complete copy of the license, so the other repositories carry copies, but those copies are generated:
 
 ```
 node scripts/sync.js --all
