@@ -10,7 +10,7 @@ The modules in `modules/` (Modrinth, backups, scheduler, safety checks, login li
 ## Contract
 
 `modules/runtime-contract.js` lists the methods a runtime provides for one instance:
-`isRunning`, `isReady`, `start`, `stop`, `restart`, `kill`, `stopAndWait`, `command`. A product calls `assertRuntime(runtime)` at startup.
+`isRunning`, `isReady`, `start`, `stop`, `restart`, `kill`, `stopAndWait`, `command`, `stats`. A product calls `assertRuntime(runtime)` at startup.
 
 ## Rules
 
