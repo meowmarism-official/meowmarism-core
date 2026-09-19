@@ -2,14 +2,14 @@
 // Copies this core version into a product or the website: node scripts/sync.js ../meowmarism-lite
 //   - the legal files (LICENSE, CONTRIBUTOR-AGREEMENT.md, CONTRIBUTORS.md, BRAND-POLICY.md) go to the repository root
 //     (the website repo gets WEBSITE-LICENSE.md as its LICENSE and no contributor files)
-//   - with --assets, brand/ and tokens/ also go to panel/core/ (only for targets that have a panel/ folder)
+//   - with --assets, brand/, tokens/ and modules/ also go to panel/core/ (only for targets that have a panel/ folder)
 // Edit the files here in core only. The products commit the copies so their release tarballs are complete without submodules.
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
 const LEGAL = ['LICENSE', 'CONTRIBUTOR-AGREEMENT.md', 'CONTRIBUTORS.md', 'BRAND-POLICY.md'];
-const ASSET_DIRS = ['brand', 'tokens'];
+const ASSET_DIRS = ['brand', 'tokens', 'modules'];
 const root = path.resolve(__dirname, '..');
 
 function syncTarget(targetArg, withAssets) {
