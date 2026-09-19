@@ -1,6 +1,6 @@
 # Meowmarism License 1.0
 
-Copyright (c) 2026 Maja Bekurdts ("HexedMaya") and Meowmarism contributors.
+Copyright (c) 2026 HexedMaya. All rights reserved except as expressly granted by this License.
 
 Meowmarism is source-available software. Commercial use is permitted, but monetization of the Software itself is restricted as described in this License.
 
@@ -18,9 +18,9 @@ Running the Software or a Modified Version on servers that you or your organizat
 
 "Software Monetization" means charging or receiving payment specifically for the right to obtain, download, license, access, use, or receive a copy of the Software or a Modified Version, where the Software itself is the product or a primary product being sold.
 
-"Project Steward" means the person or entity currently authorized to maintain the official Meowmarism Project under the Meowmarism Contributor & Governance Agreement.
+"Licensor" means HexedMaya, the original author and rights holder of the original Meowmarism Project material, except for rights in Contributions owned by their respective contributors.
 
-The initial Project Steward is Maja Bekurdts ("HexedMaya").
+The Licensor does not lose or transfer its copyright, branding, or other intellectual-property rights merely because the maintenance of the official Meowmarism Project changes hands.
 
 Commercial use of the Software is permitted. This includes internal business use, use in commercial infrastructure, use in connection with paid hosting or managed services, use on commercially operated servers, paid support or consulting, and inclusion with hardware, systems, or other products or services, provided that the Software itself is not sold or separately monetized.
 
@@ -171,7 +171,7 @@ Calling Meowmarism "free" does not make an arrangement compliant if the price is
 
 ### 6.8 The official project
 
-Nothing in this License gives the Project Steward or any future maintainer the right to sell or separately license the Software itself, to commercially relicense community Contributions, to convert them into proprietary software, or to place them behind paid access.
+Nothing in this License gives the Licensor or any future maintainer the right to sell or separately license the Software itself, to commercially relicense community Contributions, to convert them into proprietary software, or to place them behind paid access.
 
 This does not restrict operating a commercial service that merely uses Meowmarism as a tool or component.
 
@@ -183,7 +183,7 @@ Payment may not be required in exchange for rights, access, downloads, features,
 
 ## 8. Authorship and Attribution
 
-The original Meowmarism work was created by Maja Bekurdts ("HexedMaya") and may include work from additional contributors.
+The original Meowmarism work was created by HexedMaya and may include work from additional contributors.
 
 Contributors remain authors of their own original contributions to the extent provided by applicable law.
 
@@ -253,13 +253,13 @@ The "Unofficial" designation must be at least as prominent as the "Meowmarism" p
 
 Every independently distributed Modified Version must prominently state, in ordinary user-facing material:
 
-"Unofficial Meowmarism. This is an independent third-party version. It is not developed, maintained, operated, supported, approved, sponsored, or endorsed by HexedMaya, the Project Steward, or the official Meowmarism Project."
+"Unofficial Meowmarism. This is an independent third-party version. It is not developed, maintained, operated, supported, approved, sponsored, or endorsed by HexedMaya, the Licensor, or the official Meowmarism Project."
 
 Equivalent wording may be used only if the same meaning is immediately clear.
 
 A Modified Version that does not use "Meowmarism" in its name may instead state, for example:
 
-"Based on Meowmarism. Unofficial independent modified version. It is not developed, maintained, operated, supported, approved, sponsored, or endorsed by HexedMaya, the Project Steward, or the official Meowmarism Project."
+"Based on Meowmarism. Unofficial independent modified version. It is not developed, maintained, operated, supported, approved, sponsored, or endorsed by HexedMaya, the Licensor, or the official Meowmarism Project."
 
 Section 13 applies to such versions in addition to this Section.
 
@@ -315,7 +315,7 @@ A later Project Rule change does not retroactively alter rights already granted 
 
 ## 16. Non-Compliant Versions
 
-Where a distributed version materially violates this License or the applicable Project Rules, the Project Steward may require the distributor to:
+Where a distributed version materially violates this License or the applicable Project Rules, the Licensor may require the distributor to:
 
 - stop distribution;
 - remove downloads;
@@ -328,7 +328,7 @@ Where a distributed version materially violates this License or the applicable P
 - stop prohibited Software Monetization;
 - otherwise bring the distribution into compliance.
 
-Where legally available, the Project Steward may request that repositories, hosting providers, distribution platforms, or other relevant third parties remove or disable access to material distributed in violation of enforceable rights.
+Where legally available, the Licensor may request that repositories, hosting providers, distribution platforms, or other relevant third parties remove or disable access to material distributed in violation of enforceable rights.
 
 This License does not guarantee that a third-party platform must comply with such a request.
 
@@ -344,7 +344,7 @@ A first-time violation is automatically cured, and the rights are reinstated, if
 
 ### Repeated or knowing violations
 
-If the violation is repeated, or the violator knew of it and continued, rights are reinstated only when the Project Steward confirms reinstatement in writing after the violation has been fully corrected.
+If the violation is repeated, or the violator knew of it and continued, rights are reinstated only when the Licensor confirms reinstatement in writing after the violation has been fully corrected.
 
 ### Downstream users
 
@@ -358,7 +358,7 @@ Project succession is governed by the Meowmarism Contributor & Governance Agreem
 
 A successor receives no broader rights than the project lawfully possessed before the succession.
 
-Only the current Project Steward may issue project-level permissions or exceptions, and only where the project actually holds the required rights and the Contributor & Governance Agreement permits that decision.
+Only the Licensor may issue project-level permissions or exceptions, and only to the extent the Licensor owns the required rights and the Contributor & Governance Agreement permits that decision.
 
 No maintainer may grant rights in a contributor's work that the contributor did not grant to the project.
 
@@ -374,7 +374,7 @@ No maintainer or contributor is obligated to provide support, maintenance, updat
 
 ## 20. Limitation of Liability
 
-To the maximum extent permitted by applicable law, the Project Steward, original authors, and contributors shall not be liable for damages, losses, claims, costs, or other liability arising from or relating to the Software or its use.
+To the maximum extent permitted by applicable law, the Licensor, original authors, and contributors shall not be liable for damages, losses, claims, costs, or other liability arising from or relating to the Software or its use.
 
 This includes data loss, corruption, downtime, lost revenue, lost profits, business interruption, hardware or software damage, account loss, security incidents, and indirect, consequential, incidental, or special damages.
 
@@ -398,6 +398,6 @@ Mandatory provisions of applicable law remain unaffected.
 
 ## 24. Entire License
 
-No README, issue, pull request, Discord message, email, conversation, documentation page, source comment, or other informal statement creates an exception unless it is a valid written permission issued by the Project Steward with every approval and right required by this License and the Contributor & Governance Agreement.
+No README, issue, pull request, Discord message, email, conversation, documentation page, source comment, or other informal statement creates an exception unless it is a valid written permission issued by the Licensor with every approval and right required by this License and the Contributor & Governance Agreement.
 
 All rights not expressly granted remain with their respective rights holders.

@@ -1,6 +1,6 @@
 # Meowmarism Website License 1.0
 
-Copyright (c) 2026 Meowmarism contributors. All rights reserved.
+Copyright (c) 2026 HexedMaya. All rights reserved.
 
 This License applies to the original source code, visual design, layout, styling, text, graphics, animations, artwork, interface elements, and other original material of the official Meowmarism website, except for third-party material expressly identified as such.
 

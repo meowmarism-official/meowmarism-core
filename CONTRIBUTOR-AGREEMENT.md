@@ -6,6 +6,8 @@ This Agreement applies to contributions intentionally submitted for inclusion in
 
 Its purpose is to keep accepted contributions publicly maintainable, preserve contributor credit, prevent the unilateral sale, proprietary relicensing, or closing of community work, and ensure that trivial contributions cannot be used to manufacture project-control rights.
 
+"Licensor" has the meaning given in the Meowmarism License (HexedMaya).
+
 ## 1. Contribution
 
 A "Contribution" is original material intentionally submitted for inclusion in official Meowmarism, including source code, patches, pull requests, commits, tests, documentation, translations, assets, designs, configuration, scripts, or other project material.
@@ -63,7 +65,7 @@ Leaving the project does not by itself require removal of previously accepted Co
 
 ## 5. Rights Granted for Project Operation
 
-For each accepted Contribution, the Contributor grants the official Meowmarism Project and its lawful Project Steward a worldwide, royalty-free, continuing right, to the maximum extent permitted by law, to:
+For each accepted Contribution, the Contributor grants the official Meowmarism Project and the Licensor a worldwide, royalty-free, continuing right, to the maximum extent permitted by law, to:
 
 - reproduce and store the Contribution;
 - publish and make it publicly available;
@@ -88,7 +90,7 @@ Mandatory statutory rights remain unaffected.
 
 ## 6. Rights Not Granted
 
-A Contributor does not grant the Project Steward an unrestricted right to:
+A Contributor does not grant the Licensor an unrestricted right to:
 
 - sell the Contributor's Contribution as a software product;
 - license the Contributor's Contribution under proprietary terms, or under terms that charge for the Software itself (Software Monetization under the Meowmarism License);
@@ -101,7 +103,7 @@ A Contributor does not grant the Project Steward an unrestricted right to:
 
 This does not prevent the official project or anyone else from operating a commercial service, hosting, support, consulting, or products that merely use Meowmarism as a tool or component, as permitted by the Meowmarism License.
 
-No Project Steward, repository owner, organization owner, domain owner, server owner, or successor receives those rights merely by controlling project infrastructure.
+No maintainer, Licensor, repository owner, organization owner, domain owner, server owner, or successor receives those rights merely by controlling project infrastructure.
 
 ## 7. Permanent Restrictions on Community Work
 
@@ -117,7 +119,7 @@ The following cannot be authorized merely by a governance vote:
 
 If a future action legally requires rights that a Contributor did not grant under this Agreement, those rights must be obtained separately from every affected rights holder.
 
-A Project Steward or governance vote cannot create rights the project does not possess.
+The Licensor or a governance vote cannot create rights the project does not possess.
 
 ## 8. Contributor Record
 
@@ -193,7 +195,7 @@ The following are "Protected Project Decisions":
 - materially weakening the public-source requirement;
 - materially weakening mandatory contributor attribution;
 - materially weakening the unofficial-fork and non-affiliation rules;
-- transferring project stewardship to another person or entity;
+- transferring maintenance of the official project to another person or entity;
 - granting official status to an independently maintained fork;
 - changing this governance model in a way that reduces existing Governance Contributor protections;
 - attempting a major change in project purpose that materially changes the basis on which Contributors contributed.
@@ -218,7 +220,7 @@ Possession or control of any of the following does not create ownership of Contr
 - package accounts;
 - social accounts;
 - project branding;
-- the title "Project Steward".
+- the role of maintainer of the official project.
 
 A person therefore cannot take over project infrastructure and lawfully claim ownership of all Meowmarism code or the right to sell everybody's work.
 
@@ -228,7 +230,7 @@ Each Contributor's rights and the limits of the rights they granted continue to 
 
 Normal project succession is allowed only as a Protected Project Decision.
 
-A successor Project Steward must expressly accept:
+A successor maintainer must expressly accept:
 
 - the Meowmarism License;
 - this Contributor & Governance Agreement;
@@ -245,7 +247,7 @@ A succession may not be used as a disguised commercial sale or proprietary conve
 
 A successor may not restart contributor history or remove existing Recognized Contributors.
 
-Project succession changes stewardship. It does not rewrite authorship.
+Project succession changes maintainership. It does not rewrite authorship.
 
 A successor may not replace the contributor record with only their own name or present the project as if they created work authored by earlier Contributors.
 

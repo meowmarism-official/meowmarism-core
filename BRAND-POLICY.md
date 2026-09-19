@@ -1,6 +1,6 @@
 # Meowmarism Brand Policy 1.0
 
-Copyright (c) 2026 Meowmarism contributors. All rights reserved.
+Copyright (c) 2026 HexedMaya. All rights reserved.
 
 This Policy describes the limited circumstances in which third parties may use the official Meowmarism name, logo, and brand assets.
 

@@ -6,9 +6,9 @@ Contributor attribution must not be removed or rewritten merely because somebody
 
 Each contributor may choose the reasonable public name, pseudonym, or username used for their own attribution.
 
-## Project Steward
+## Licensor
 
-- **HexedMaya** - creator and initial Project Steward
+- **HexedMaya** - creator and Licensor
 
 ## Governance Contributors
 
