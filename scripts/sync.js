@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 // Copies this core version into a product or the website: node scripts/sync.js ../meowmarism-lite
-//   - the legal files (LICENSE, CONTRIBUTOR-AGREEMENT.md, CONTRIBUTORS.md) go to the repository root
+//   - the legal files (LICENSE, CONTRIBUTOR-AGREEMENT.md, CONTRIBUTORS.md, BRAND-POLICY.md) go to the repository root
+//     (the website repo gets WEBSITE-LICENSE.md as its LICENSE)
 //   - with --assets, brand/ and tokens/ also go to panel/core/ (only for targets that have a panel/ folder)
 // Edit the files here in core only. The products commit the copies so their release tarballs are complete without submodules.
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
-const LEGAL = ['LICENSE', 'CONTRIBUTOR-AGREEMENT.md', 'CONTRIBUTORS.md'];
+const LEGAL = ['LICENSE', 'CONTRIBUTOR-AGREEMENT.md', 'CONTRIBUTORS.md', 'BRAND-POLICY.md'];
 const ASSET_DIRS = ['brand', 'tokens'];
 const root = path.resolve(__dirname, '..');
 
@@ -16,8 +17,10 @@ function syncTarget(targetArg, withAssets) {
   if (!fs.existsSync(target)) throw new Error(`not found: ${target}`);
   const files = [];
 
+  const isWebsite = fs.existsSync(path.join(target, 'public')) && !fs.existsSync(path.join(target, 'panel'));
   for (const f of LEGAL) {
-    fs.copyFileSync(path.join(root, f), path.join(target, f));
+    const from = isWebsite && f === 'LICENSE' ? 'WEBSITE-LICENSE.md' : f;
+    fs.copyFileSync(path.join(root, from), path.join(target, f));
     files.push(f);
   }
 
