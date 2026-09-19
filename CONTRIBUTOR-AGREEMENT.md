@@ -4,7 +4,7 @@ Version 1.0
 
 This Agreement applies to contributions intentionally submitted for inclusion in the official Meowmarism Project.
 
-Its purpose is to keep accepted contributions publicly maintainable, preserve contributor credit, prevent unilateral commercialization or sale of community work, and ensure that trivial contributions cannot be used to manufacture project-control rights.
+Its purpose is to keep accepted contributions publicly maintainable, preserve contributor credit, prevent the unilateral sale, proprietary relicensing, or closing of community work, and ensure that trivial contributions cannot be used to manufacture project-control rights.
 
 ## 1. Contribution
 
@@ -73,10 +73,12 @@ For each accepted Contribution, the Contributor grants the official Meowmarism P
 - combine it with other project material;
 - remove or replace portions during normal development;
 - distribute it as part of Meowmarism;
-- include it in future non-commercial Meowmarism releases;
+- include it in future Meowmarism releases;
 - distribute it under the Meowmarism License;
-- allow downstream users the rights granted by the Meowmarism License;
-- transfer these project-operation rights to a lawful non-commercial successor only as permitted by this Agreement.
+- allow downstream users the rights granted by the Meowmarism License, including its permission for commercial use;
+- transfer these project-operation rights to a lawful successor only as permitted by this Agreement.
+
+Contributors permit commercial use of their Contributions consistent with the Meowmarism License, but do not grant authority to proprietary-license, close-source, or separately sell their Contributions as a software product outside the permissions of that License.
 
 These rights are granted so the project can continue to exist and be maintained even if an individual Contributor stops participating.
 
@@ -88,28 +90,30 @@ Mandatory statutory rights remain unaffected.
 
 A Contributor does not grant the Project Steward an unrestricted right to:
 
-- sell the Contributor's Contribution;
-- commercially license the Contributor's Contribution;
+- sell the Contributor's Contribution as a software product;
+- license the Contributor's Contribution under proprietary or commercial software-license terms;
 - convert the Contributor's Contribution into proprietary software;
 - place the Contributor's Contribution behind paid access;
 - grant exclusive commercial rights over the Contribution;
-- use the Contribution to convert official Meowmarism into a commercial SaaS product;
+- use the Contribution to sell or separately monetize the Software itself, including as a paid software product or as a paid service whose primary product is access to Meowmarism itself (Software Monetization under the Meowmarism License);
 - remove mandatory attribution;
 - pretend somebody else authored the Contribution.
+
+This does not prevent the official project or anyone else from operating a commercial service, hosting, support, consulting, or products that merely use Meowmarism as a tool or component, as permitted by the Meowmarism License.
 
 No Project Steward, repository owner, organization owner, domain owner, server owner, or successor receives those rights merely by controlling project infrastructure.
 
 ## 7. Permanent Restrictions on Community Work
 
-The rights granted under this Agreement do not include authority to sell, proprietary-license, or commercially exploit community Contributions.
+The rights granted under this Agreement do not include authority to sell the Software or community Contributions as a software product, to proprietary-license them, or to close their source.
 
 The following cannot be authorized merely by a governance vote:
 
 - sale of community Contributors' copyright or authorship;
-- sale of commercial exploitation rights that were never granted;
+- sale or exclusive licensing of rights in Contributions that were never granted;
 - proprietary relicensing of community Contributions;
 - removal of contributor authorship history;
-- conversion of community Contributions into closed-source commercial property.
+- conversion of community Contributions into closed-source or proprietary software.
 
 If a future action legally requires rights that a Contributor did not grant under this Agreement, those rights must be obtained separately from every affected rights holder.
 
@@ -185,7 +189,7 @@ A person cannot grant themselves Governance Contributor status merely by submitt
 The following are "Protected Project Decisions":
 
 - changing the primary project license;
-- materially weakening the non-commercial restriction;
+- materially weakening the restriction on Software Monetization, or materially changing the balance between permitted commercial use and restricted Software Monetization in the Meowmarism License;
 - materially weakening the public-source requirement;
 - materially weakening mandatory contributor attribution;
 - materially weakening the unofficial-fork and non-affiliation rules;
@@ -222,7 +226,7 @@ Each Contributor's rights and the limits of the rights they granted continue to 
 
 ## 14. Project Succession
 
-Normal non-commercial project succession is allowed only as a Protected Project Decision.
+Normal project succession is allowed only as a Protected Project Decision.
 
 A successor Project Steward must expressly accept:
 
@@ -230,7 +234,7 @@ A successor Project Steward must expressly accept:
 - this Contributor & Governance Agreement;
 - all existing contributor attribution;
 - existing governance protections;
-- the non-commercial project model;
+- the rules of the Meowmarism License on commercial use and Software Monetization;
 - the limits of the rights originally granted by Contributors.
 
 The successor receives no broader rights than the project lawfully possessed before the succession.
@@ -251,7 +255,7 @@ A Contributor may stop participating at any time.
 
 Leaving does not automatically revoke project-operation rights already validly granted for accepted Contributions.
 
-The project may continue to maintain, modify, publish, and distribute those Contributions under the non-commercial Meowmarism model.
+The project may continue to maintain, modify, publish, and distribute those Contributions under the Meowmarism License.
 
 Attribution obligations continue to apply.
 
@@ -295,7 +299,7 @@ Ordinary administrative text may be clarified without removing previously grante
 
 Any amendment that materially changes:
 
-- commercial restrictions;
+- the rules on commercial use and Software Monetization;
 - contributor attribution;
 - governance rights;
 - project succession;

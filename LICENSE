@@ -2,7 +2,7 @@
 
 Copyright (c) 2026 Maja Bekurdts ("HexedMaya") and Meowmarism contributors.
 
-Meowmarism is source-available software. Commercial use is prohibited.
+Meowmarism is source-available software. Commercial use is permitted, but monetization of the Software itself is restricted as described in this License.
 
 ## 1. Definitions
 
@@ -14,13 +14,17 @@ Meowmarism is source-available software. Commercial use is prohibited.
 
 "Corresponding Source" means the complete source code in the preferred form for making modifications, together with build scripts, dependency information, configuration templates, and other files reasonably necessary to build and modify the distributed version. Secrets, passwords, credentials, private keys, personal data, and other information that should reasonably remain confidential are excluded.
 
-"Commercial Use" means any direct or indirect use intended to create revenue, profit, financial benefit, economic gain, or commercial advantage.
+"Software Monetization" means charging or receiving payment specifically for the right to obtain, download, license, access, use, or receive a copy of the Software or a Modified Version, where the Software itself is the product or a primary product being sold.
 
 "Project Steward" means the person or entity currently authorized to maintain the official Meowmarism Project under the Meowmarism Contributor & Governance Agreement.
 
 The initial Project Steward is Maja Bekurdts ("HexedMaya").
 
-## 2. Private Use
+Commercial use of the Software is permitted. This includes internal business use, use in commercial infrastructure, use in connection with paid hosting or managed services, use on commercially operated servers, paid support or consulting, and inclusion with hardware, systems, or other products or services, provided that the Software itself is not sold or separately monetized.
+
+## 2. Private and Commercial Use
+
+### Private use
 
 You may privately:
 
@@ -30,11 +34,15 @@ You may privately:
 - modify the Software;
 - create forks and private Modified Versions;
 - self-host the Software;
-- use private Modified Versions for non-commercial purposes.
+- use private Modified Versions.
 
 Private modifications do not have to be published.
 
 If you do not distribute the Software or a Modified Version to another person or entity, you are not required to publish your modifications.
+
+### Commercial use
+
+Commercial use, business use, professional use, and use for economic activity are permitted except for Software Monetization prohibited by Section 6.
 
 ## 3. Redistribution
 
@@ -49,8 +57,8 @@ Every distributed version must:
 5. make the Corresponding Source publicly available;
 6. clearly disclose that modifications were made;
 7. comply with the unofficial-version and naming requirements;
-8. remain non-commercial;
-9. comply with applicable Project Rules that were expressly incorporated into the applicable release or license terms.
+8. not be distributed or offered in a manner constituting prohibited Software Monetization under Section 6;
+9. comply with the Project Rules that apply to that release under Section 14.
 
 You may not relicense the Software or a Modified Version under another license.
 
@@ -82,48 +90,94 @@ Independent components that are genuinely separate from Meowmarism may retain th
 
 Combining independent components with Meowmarism does not remove this License from Meowmarism or derivative portions of it.
 
-## 6. Commercial Use Is Prohibited
+Materials expressly identified as third-party materials remain subject to their respective licenses and are not relicensed under the Meowmarism License.
 
-Commercial Use of the Software or any Modified Version is prohibited.
+## 6. Commercial Use and Software Monetization
 
-This includes, without limitation:
+### 6.1 Commercial use is permitted
 
-- sale or resale;
-- paid downloads or paid access;
-- subscriptions or paid memberships;
-- license fees or usage fees;
-- advertising-supported distribution;
-- commercial sponsorship arrangements;
-- commercial or paid hosting;
-- Software as a Service (SaaS);
-- managed services;
-- paid server access;
+Commercial use of the Software and Modified Versions is permitted.
+
+You may use the Software in connection with commercial activities, businesses, paid services, hosting, consulting, support, hardware, infrastructure, and other commercial products or services.
+
+### 6.2 Software Monetization is prohibited
+
+You may not charge for the Software itself or for rights granted by this License.
+
+In particular, the following are prohibited:
+
+- paid software licenses;
+- paid downloads;
+- selling copies of the Software or a Modified Version;
+- paid access where the primary thing being sold is Meowmarism itself;
+- subscription access to Meowmarism itself;
+- selling a renamed or rebranded fork as a software product;
+- charging to unlock source-code functionality;
+- charging for otherwise restricted builds or releases;
+- requiring payment to receive the Corresponding Source.
+
+### 6.3 What is expressly permitted
+
+The following are not Software Monetization and are permitted:
+
+- commercial internal use;
+- commercial hosting;
+- managed hosting;
+- commercial Minecraft and other game server hosting;
+- use by companies;
+- consulting;
+- installation and setup services;
 - paid support;
-- paid updates;
-- paid features;
-- paid early access;
-- commercial bundling;
-- inclusion in a paid product or paid service;
-- use intended primarily to generate revenue;
-- use intended to increase the commercial value of another product or service;
-- indirect monetization designed to avoid this section.
+- commercial products that use Meowmarism as a component or tool;
+- selling hardware with Meowmarism installed;
+- services operated using Meowmarism;
+- advertising or sponsorship around an otherwise compliant project.
 
-Calling Meowmarism itself "free" does not make an arrangement non-commercial if money is charged for access, hosting, a surrounding service, a subscription, or another connected benefit.
+### 6.4 Paid services
 
-Nothing in this License gives the Project Steward or any future maintainer the right to sell, commercially relicense, or convert community Contributions into proprietary software.
+A paid service is permitted when Meowmarism is used as a tool or component of that service.
+
+A paid service whose primary product is access to Meowmarism itself, or to a substantially equivalent Modified Version, constitutes Software Monetization.
+
+### 6.5 Bundling and hardware
+
+Including the Software with hardware, hosting, or another product or service is not Software Monetization if the Software is not the primary product being sold and is not separately priced or separately gated.
+
+The requirements for Distribution in Sections 3 to 5 and 10 to 13 continue to apply to such bundles, including the requirement to make the Corresponding Source publicly available without payment.
+
+### 6.6 Examples
+
+Permitted:
+
+- A company uses Meowmarism internally.
+- A Minecraft hosting company uses Meowmarism to manage its servers.
+- A company sells Minecraft servers on which Meowmarism runs.
+- A company sells a physical server with Meowmarism preinstalled, while the Distribution requirements of this License continue to be met.
+- Hosting costs 20 EUR per month and Meowmarism is simply the free control panel that comes with it.
+
+Not permitted:
+
+- Someone takes Meowmarism, calls it "CoolPanel", and sells licenses for 19 EUR per month.
+- Someone charges 10 EUR for the download of their fork.
+- Someone runs "hosted-meowmarism.com" and charges 8 EUR per month only for access to the panel.
+
+### 6.7 Substance over form
+
+Whether an arrangement is Software Monetization depends on what is actually sold or made conditional on payment, not on how it is described.
+
+Calling Meowmarism "free" does not make an arrangement compliant if the price is in substance a charge for the Software itself. Splitting, renaming, or restructuring a charge in order to avoid this Section does not avoid it.
+
+### 6.8 The official project
+
+Nothing in this License gives the Project Steward or any future maintainer the right to sell or separately license the Software itself, to commercially relicense community Contributions, to convert them into proprietary software, or to place them behind paid access.
+
+This does not restrict operating a commercial service that merely uses Meowmarism as a tool or component.
 
 ## 7. Donations
 
-Genuinely voluntary donations may be accepted in connection with a Modified Version only if all of the following conditions are satisfied:
+Voluntary donations, sponsorships, grants, and similar funding are permitted.
 
-1. no donation is required for access, downloads, source code, binaries, features, updates, support, priority, early access, special builds, hosting, membership, roles, privileges, or other benefits;
-2. the person or project accepting donations has made substantial original contributions to the Modified Version;
-3. donations are used only for reasonable costs directly associated with maintaining, developing, hosting, or operating the relevant non-commercial project;
-4. reasonable reserves may be kept for future project expenses;
-5. donations are not taken as personal profit, wages, dividends, owner distributions, or unrelated private financial gain;
-6. the donation system is not used to disguise Commercial Use.
-
-Merely mirroring, renaming, rebranding, changing colors or logos, changing configuration values, changing a few lines, or making other trivial or insignificant modifications does not count as a substantial original contribution for this exception.
+Payment may not be required in exchange for rights, access, downloads, features, builds, or other benefits where doing so would constitute prohibited Software Monetization.
 
 ## 8. Authorship and Attribution
 
@@ -209,15 +263,17 @@ The disclosure must not imply that third-party modifications were made by HexedM
 
 ## 14. Project Rules and Conduct
 
-Public distribution rights under this License are conditional on compliance with any Project Rules expressly incorporated into the applicable Meowmarism release or license terms.
+Public distribution rights under this License are conditional on compliance with the Project Rules that apply to the release being distributed.
 
 Project Rules may contain reasonable conduct, safety, distribution, branding, and community requirements.
+
+Only the version of the Project Rules expressly identified by version number, release identifier, or immutable commit reference for the applicable release applies. A reference to a file or page that can be changed later is not sufficient.
 
 A later Project Rule change does not retroactively alter rights already granted under an earlier version unless the affected party accepts the new terms or applicable law otherwise permits it.
 
 ## 15. Non-Compliant Versions
 
-Where a distributed version materially violates this License or applicable Project Rules, the Project Steward may require the distributor to:
+Where a distributed version materially violates this License or the applicable Project Rules, the Project Steward may require the distributor to:
 
 - stop distribution;
 - remove downloads;
@@ -226,7 +282,7 @@ Where a distributed version materially violates this License or applicable Proje
 - restore required attribution;
 - restore required contributor records;
 - correct unofficial notices;
-- stop prohibited commercial activity;
+- stop prohibited Software Monetization;
 - otherwise bring the distribution into compliance.
 
 Where legally available, the Project Steward may request that repositories, hosting providers, distribution platforms, or other relevant third parties remove or disable access to material distributed in violation of enforceable rights.
@@ -235,13 +291,21 @@ This License does not guarantee that a third-party platform must comply with suc
 
 ## 16. Termination
 
-Rights granted to a party under this License automatically terminate while that party materially violates this License.
+Rights granted to a party under this License automatically terminate while that party materially violates this License, subject to the cure rules below.
 
 After termination, that party must stop activities that require permission under this License, including non-compliant distribution.
 
-Downstream users who independently comply with this License do not automatically lose their rights solely because an upstream distributor violated it.
+### First-time violations
 
-Rights may be restored after the violation is corrected where the Project Steward and applicable project governance permit restoration.
+A first-time violation is automatically cured, and the rights are reinstated, if the violation is fully corrected within 30 days after the violator becomes aware of it or receives notice of it.
+
+### Repeated or knowing violations
+
+If the violation is repeated, or the violator knew of it and continued, rights are reinstated only when the Project Steward confirms reinstatement in writing after the violation has been fully corrected.
+
+### Downstream users
+
+Downstream users who independently comply with this License do not lose their rights solely because an upstream distributor violated it.
 
 ## 17. Project Succession and Permissions
 

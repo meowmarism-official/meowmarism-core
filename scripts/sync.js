@@ -1,32 +1,56 @@
 #!/usr/bin/env node
-// Copies this core version into a product repo: node scripts/sync.js ../meowmarism-lite
-// The product commits the result, so its release tarball is complete without any submodule.
+// Copies this core version into a product or the website: node scripts/sync.js ../meowmarism-lite
+//   - the legal files (LICENSE, CONTRIBUTOR-AGREEMENT.md, CONTRIBUTORS.md) go to the repository root
+//   - with --assets, brand/ and tokens/ also go to panel/core/ (only for targets that have a panel/ folder)
+// Edit the files here in core only. The products commit the copies so their release tarballs are complete without submodules.
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
-const target = process.argv[2];
-if (!target || !fs.existsSync(path.join(target, 'panel'))) {
-  console.error('usage: node scripts/sync.js <product repo folder containing panel/>');
+const LEGAL = ['LICENSE', 'CONTRIBUTOR-AGREEMENT.md', 'CONTRIBUTORS.md'];
+const ASSET_DIRS = ['brand', 'tokens'];
+const root = path.resolve(__dirname, '..');
+
+function syncTarget(targetArg, withAssets) {
+  const target = path.resolve(targetArg);
+  if (!fs.existsSync(target)) throw new Error(`not found: ${target}`);
+  const files = [];
+
+  for (const f of LEGAL) {
+    fs.copyFileSync(path.join(root, f), path.join(target, f));
+    files.push(f);
+  }
+
+  if (withAssets && fs.existsSync(path.join(target, 'panel'))) {
+    const dest = path.join(target, 'panel', 'core');
+    fs.rmSync(dest, { recursive: true, force: true });
+    const copy = (rel) => {
+      const from = path.join(root, rel);
+      if (fs.statSync(from).isDirectory()) { for (const f of fs.readdirSync(from)) copy(path.join(rel, f)); return; }
+      fs.mkdirSync(path.dirname(path.join(dest, rel)), { recursive: true });
+      fs.copyFileSync(from, path.join(dest, rel));
+      files.push(`panel/core/${rel.split(path.sep).join('/')}`);
+    };
+    ASSET_DIRS.forEach(copy);
+  }
+
+  let commit = null;
+  try { commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root }).toString().trim(); } catch (_) {}
+  const version = require(path.join(root, 'package.json')).version;
+  fs.writeFileSync(path.join(target, 'core.lock'), JSON.stringify({ core: 'meowmarism-core', version, commit, files }, null, 2) + '\n');
+  console.log(`synced meowmarism-core ${version}${commit ? ' (' + commit.slice(0, 7) + ')' : ''} -> ${target} (${files.length} files)`);
+}
+
+const argv = process.argv.slice(2);
+const withAssets = argv.includes('--assets');
+const args = argv.filter((a) => a !== '--assets');
+if (!args.length) {
+  console.error('usage: node scripts/sync.js [--assets] <repo folder> [more repo folders...]');
+  console.error('       node scripts/sync.js [--assets] --all   (every meowmarism-* repo next to this one that already has commits, except core)');
   process.exit(1);
 }
-const root = path.resolve(__dirname, '..');
-const dest = path.join(path.resolve(target), 'panel', 'core');
-const SOURCES = ['brand', 'tokens'];
-
-fs.rmSync(dest, { recursive: true, force: true });
-const files = [];
-function copy(rel) {
-  const from = path.join(root, rel);
-  if (fs.statSync(from).isDirectory()) { for (const f of fs.readdirSync(from)) copy(path.join(rel, f)); return; }
-  fs.mkdirSync(path.dirname(path.join(dest, rel)), { recursive: true });
-  fs.copyFileSync(from, path.join(dest, rel));
-  files.push(rel.split(path.sep).join('/'));
-}
-SOURCES.forEach(copy);
-
-let commit = null;
-try { commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root }).toString().trim(); } catch (_) {}
-const version = require(path.join(root, 'package.json')).version;
-fs.writeFileSync(path.join(path.resolve(target), 'core.lock'), JSON.stringify({ core: 'meowmarism-core', version, commit, files }, null, 2) + '\n');
-console.log(`synced meowmarism-core ${version}${commit ? ' (' + commit.slice(0, 7) + ')' : ''}: ${files.length} files -> ${dest}`);
+const hasCommits = (dir) => { try { execFileSync('git', ['rev-parse', 'HEAD'], { cwd: dir, stdio: 'ignore' }); return true; } catch (_) { return false; } };
+const targets = args[0] === '--all'
+  ? fs.readdirSync(path.dirname(root)).filter((d) => d.startsWith('meowmarism-') && d !== path.basename(root)).map((d) => path.join(path.dirname(root), d)).filter((d) => fs.existsSync(path.join(d, '.git')) && hasCommits(d))
+  : args;
+targets.forEach((t) => syncTarget(t, withAssets));

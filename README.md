@@ -14,18 +14,28 @@ The foundation of every meowmarism product. Design decisions are made once, here
 brand/     logo (colored and single color), server icon, ready-made PNGs (avatar, social preview, high resolution)
 tokens/    colors, radii, navigation rail sizes and fonts as tokens.css and tokens.json
 docs/      design rules, naming rules, the permission model and how products use core
-scripts/   sync.js copies this core into a product
+scripts/   sync.js copies the legal files (and optionally the design assets) into the other repositories
 ```
 
-## How a product uses core
+## One place for the legal files
 
-Products vendor core instead of depending on it at runtime. There is no build step and no submodule (release tarballs do not contain submodules, and the panel updates itself from a tarball):
+`LICENSE`, `CONTRIBUTOR-AGREEMENT.md` and `CONTRIBUTORS.md` are edited **only here**. Every distribution has to contain a complete copy of the license, so the other repositories carry copies, but those copies are generated:
 
 ```
-node scripts/sync.js ../meowmarism-lite
+node scripts/sync.js --all
 ```
 
-This copies `brand/` and `tokens/` into the product's `panel/core/` and writes a `core.lock` with the core version and commit. The product commits both. See [docs/using-core.md](docs/using-core.md).
+This copies the three legal files into every meowmarism repository next to this one that already has commits (LITE, website, and PROFESSIONAL once it exists) and writes a `core.lock` with the core version and commit. Never edit the copies by hand.
+
+## Design assets in products
+
+Brand and tokens are vendored the same way when a product uses them (no build step, no submodule; release tarballs do not contain submodules and the panel updates itself from a tarball):
+
+```
+node scripts/sync.js --assets ../meowmarism-lite
+```
+
+This additionally copies `brand/` and `tokens/` into `panel/core/`. See [docs/using-core.md](docs/using-core.md).
 
 ## Rules in short
 
