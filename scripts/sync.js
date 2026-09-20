@@ -9,7 +9,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const LEGAL = ['LICENSE', 'CONTRIBUTOR-AGREEMENT.md', 'CONTRIBUTORS.md', 'BRAND-POLICY.md'];
-const ASSET_DIRS = ['brand', 'tokens', 'modules', 'ui'];
+const ASSET_DIRS = ['brand', 'tokens', 'modules', 'ui', 'lang'];
 const root = path.resolve(__dirname, '..');
 
 function syncTarget(targetArg, withAssets) {
