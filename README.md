@@ -5,7 +5,7 @@ The foundation of every meowmarism product. Design decisions are made once, here
 | Product | Repository |
 |---|---|
 | meowmarism LITE | [meowmarism-lite](https://github.com/meowmarism-official/meowmarism-lite) |
-| meowmarism PROFESSIONAL (PRO) | [meowmarism-professional](https://github.com/meowmarism-official/meowmarism-professional), planned |
+| meowmarism PROFESSIONAL (PRO) | [meowmarism-professional](https://github.com/meowmarism-official/meowmarism-professional), early release |
 | Website | [meowmarism-website](https://github.com/meowmarism-official/meowmarism-website) |
 
 ## What lives here
