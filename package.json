@@ -4,5 +4,11 @@
   "description": "Design, brand and shared foundations of meowmarism",
   "private": true,
   "license": "SEE LICENSE IN LICENSE",
-  "repository": { "type": "git", "url": "https://github.com/meowmarism-official/meowmarism-core.git" }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meowmarism-official/meowmarism-core.git"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
 }
