@@ -1,5 +1,5 @@
 // Stacked line charts with a range selector. Shared by every product.
-// cfg: { el, load(rangeMs) -> { points: [{ t, ... }] }, charts: [{ key, title, color, format(v), max? }], t, esc, isVisible() }
+// cfg: { el, load(rangeMs) -> { points: [{ t, ... }] }, charts: [{ key, title, color, format(v), max?, minMax? }], t, esc, isVisible() }
 (function () {
   const RANGES = [['1m', 60e3], ['5m', 300e3], ['15m', 900e3], ['1h', 3600e3], ['24h', 86400e3], ['7d', 604800e3]];
 
@@ -14,7 +14,7 @@
     const muted = css.getPropertyValue('--muted').trim() || 'rgba(255,255,255,.45)';
     const now = Date.now(), from = now - rangeMs;
     const vals = pts.map((p) => p[chart.key]);
-    const max = chart.max || Math.max(1, ...vals) * 1.15;
+    const max = chart.max || Math.max(chart.minMax || 1, ...vals) * 1.15;
     const padL = 44, padB = 18, padT = 6;
     const X = (t) => padL + ((t - from) / rangeMs) * (w - padL - 6);
     const Y = (v) => padT + (1 - Math.min(v, max) / max) * (h - padT - padB);
