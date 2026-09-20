@@ -25,6 +25,15 @@ function syncTarget(targetArg, withAssets) {
     files.push(f);
   }
 
+  if (isWebsite) {
+    const legalDir = path.join(target, 'public', 'legal');
+    fs.mkdirSync(legalDir, { recursive: true });
+    for (const [from, to] of [['LICENSE', 'LICENSE.md'], ['WEBSITE-LICENSE.md', 'WEBSITE-LICENSE.md'], ['BRAND-POLICY.md', 'BRAND-POLICY.md']]) {
+      fs.copyFileSync(path.join(root, from), path.join(legalDir, to));
+      files.push(`public/legal/${to}`);
+    }
+  }
+
   if (withAssets && fs.existsSync(path.join(target, 'panel'))) {
     const dest = path.join(target, 'panel', 'core');
     fs.rmSync(dest, { recursive: true, force: true });
