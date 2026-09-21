@@ -90,11 +90,16 @@ test('duplicate paths, too many files and huge totals are rejected', () => {
   rejects(pack({ files: Array.from({ length: 20 }, (_, n) => file(`mods/${n}.jar`, { fileSize: 500 * 1024 * 1024 })) }), /download is too large/);
 });
 
-test('protected instance files are skipped, not written', () => {
-  const i = inspectMrpack(pack({ files: [file('run.sh'), file('mods/a.jar')] }, { 'overrides/panel-config.json': '{}', 'overrides/config/a.cfg': 'x', 'server-overrides/user_jvm_args.txt': '-x' }));
-  assert.deepEqual(i.files.map((f) => f.path), ['mods/a.jar']);
+test('files Meowmarism or the loader installer generates are skipped, not written', () => {
+  const names = ['run.sh', 'run.bat', 'start.sh', 'start.bat', 'user_jvm_args.txt', 'args_extra.txt', 'server.jar', 'fabric-server-launch.jar', 'panel-config.json', 'libraries/net/x/unix_args.txt', '.meowmarism-x'];
+  const i = inspectMrpack(pack({ files: [file('run.sh'), file('libraries/a.jar'), file('mods/a.jar'), file('backups/keep.zip')] }, {
+    'overrides/panel-config.json': '{}', 'overrides/config/a.cfg': 'x', 'server-overrides/user_jvm_args.txt': '-x',
+    ...Object.fromEntries(names.map((n) => ['overrides/' + n, 'x'])),
+  }));
+  assert.deepEqual(i.files.map((f) => f.path), ['mods/a.jar', 'backups/keep.zip']);
   assert.deepEqual(i.overrides.map((o) => o.path), ['config/a.cfg']);
-  assert.deepEqual(i.skipped.map((s) => s.path).sort(), ['panel-config.json', 'run.sh', 'user_jvm_args.txt']);
+  const skipped = i.skipped.map((s) => s.path);
+  for (const n of [...names, 'libraries/a.jar']) assert.ok(skipped.includes(n), n + ' is reported as skipped');
 });
 
 test('server overrides win over normal overrides at the same path', () => {

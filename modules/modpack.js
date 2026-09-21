@@ -13,7 +13,14 @@ const MAX_FILE_BYTES = 512 * 1024 * 1024;
 const MAX_DOWNLOAD_BYTES = 8 * 1024 * 1024 * 1024;
 const MAX_OVERRIDE_BYTES = 4 * 1024 * 1024 * 1024;
 const LOADER_KEYS = { 'fabric-loader': 'fabric', 'quilt-loader': 'quilt', forge: 'forge', neoforge: 'neoforge' };
-const PROTECTED_TOP = new Set(['panel-config.json', 'run.sh', 'run.bat', 'start.sh', 'start.bat', 'user_jvm_args.txt', 'backups']);
+// Files and folders Meowmarism or the loader installer generates; a pack must not replace them.
+const PROTECTED_TOP = new Set([
+  'panel-config.json',
+  'run.sh', 'run.bat', 'start.sh', 'start.bat',
+  'user_jvm_args.txt', 'args_extra.txt',
+  'server.jar', 'fabric-server-launch.jar',
+  'libraries',
+]);
 
 const reject = (message) => { throw new Error(`modpack rejected: ${message}`); };
 
