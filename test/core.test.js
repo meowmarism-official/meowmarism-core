@@ -124,3 +124,16 @@ test('updater: understands three and four number versions', () => {
   assert.equal(isNewer('garbage', '0.1.8'), false);
   assert.deepEqual(['v0.1.8', 'v0.1.8.2', 'v0.1.8.1', 'v0.1.7'].sort(newestFirst), ['v0.1.8.2', 'v0.1.8.1', 'v0.1.8', 'v0.1.7']);
 });
+
+test('startup timer: counts from the start request to ready', async () => {
+  const { createStartupTimers } = require('../modules/startup-timer');
+  const timers = createStartupTimers();
+  timers.begin('a');
+  await new Promise((r) => setTimeout(r, 30));
+  const ms = timers.ready('a', 5);
+  assert.ok(ms >= 25 && ms < 1000, String(ms));
+  assert.equal(timers.ready('a', 5), ms);
+  timers.stopped('a');
+  assert.equal(timers.info('a').readyAt, null);
+  assert.equal(timers.ready('b', 7000), 7000);
+});
