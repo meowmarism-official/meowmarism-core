@@ -1,7 +1,7 @@
 // Step-by-step dialog for creating an instance, with a progress view while it is created. Shared by every product.
 // cfg: { steps: [{ title, hint, html, validate?() -> message | falsy, onShow?() }], createLabel, create() -> Promise (throws on failure),
 //   progress() -> Promise<{ lines, progress, done, error, name }>, openHref?(name), onFinished?(), onOpen?(), t, esc, openButton, focusEl? }
-// A step may have when() -> boolean; inactive steps are skipped by Next/Back and hidden in the step dots. The first and last step must always be active.
+// A step may have when() -> boolean; inactive steps are skipped by Next/Back and hidden in the step dots. The last step must always be active; Back on the first active step closes the dialog.
 (function () {
   function mount(cfg) {
     const { t, esc } = cfg;
@@ -11,7 +11,8 @@
     let current = 1;
     const active = (k) => !cfg.steps[k - 1].when || !!cfg.steps[k - 1].when();
     const nextActive = (k) => { let j = k + 1; while (j < n && !active(j)) j++; return j; };
-    const prevActive = (k) => { let j = k - 1; while (j > 1 && !active(j)) j--; return j; };
+    const prevActive = (k) => { for (let j = k - 1; j >= 1; j--) if (active(j)) return j; return null; };
+    const firstActive = () => { let j = 1; while (!active(j)) j++; return j; };
 
     const stepHtml = cfg.steps.map((s, i) => {
       const k = i + 1;
@@ -71,7 +72,7 @@ ${stepHtml}
     }
     function open() {
       $('wizardBack').classList.add('open');
-      showStep(1);
+      showStep(firstActive());
       $('createStatus').textContent = '';
       for (let i = 1; i < n; i++) error(i, null);
       if (cfg.onOpen) cfg.onOpen();
@@ -87,7 +88,7 @@ ${stepHtml}
         showStep(nextActive(k));
       });
     }
-    for (let k = 2; k <= n; k++) $(`w-back${k}`).addEventListener('click', () => showStep(prevActive(k)));
+    for (let k = 2; k <= n; k++) $(`w-back${k}`).addEventListener('click', () => { const p = prevActive(k); if (p == null) close(); else showStep(p); });
 
     $('w-create').addEventListener('click', async () => {
       const msg = cfg.steps[n - 1].validate && cfg.steps[n - 1].validate();

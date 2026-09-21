@@ -1,6 +1,6 @@
 // Create dialog parts for modpacks: the source choice (blank server or modpack) and the modpack picker. Shared by every product.
 // mountSource({ el, t, esc, onChange(mode) }) -> { mode() }
-// mountPicker({ el, t, esc, loaders, api, iconSrc?(url), maxRamMB? }) -> { validate(), value(), reset() }
+// mountPicker({ el, t, esc, loaders, api, iconSrc?(url), maxRamMB?: number | () => number }) -> { validate(), value(), reset() }
 //   loaders: loaders this edition can run; others are shown but cannot be chosen
 //   api: { search({ query, offset }) -> { total, hits }, versions(projectId) -> [version], preview(versionId) -> summary }
 (function () {
@@ -129,7 +129,8 @@
       }
       summary = s;
       const ram = s.memory.recommendedMB;
-      const max = Math.max(ram, cfg.maxRamMB || 32768);
+      const hostMax = typeof cfg.maxRamMB === 'function' ? cfg.maxRamMB() : cfg.maxRamMB;
+      const max = Math.max(ram, hostMax || 32768);
       box.innerHTML = `
         <div class="mp-facts">
           <div><span>Minecraft</span><b>${esc(s.minecraft)}</b></div>
@@ -165,7 +166,6 @@
       q('.mp-query').value = '';
       runSearch(false);
     }
-    runSearch(false);
     return { validate, value, reset };
   }
 
