@@ -23,7 +23,7 @@ test/      tests for the modules (node --test)
 scripts/   sync.js copies the legal files and the code above into the other repositories
 ```
 
-The version in `package.json` counts breaking changes of what products depend on. `core.lock` in every product records the exact core commit that was copied, and the product tests check that copy against that commit and run the core tests too.
+The version in `package.json` uses the same four numbers as the products: new features raise the third number, a fix of a release adds a fourth (0.0.1, then 0.0.1.1). `core.lock` in every product records the exact core commit that was copied, and the product tests check that copy against that commit and run the core tests too.
 
 ## One place for the legal files
 
