@@ -166,3 +166,12 @@ test('files: a path behind a symlink that does not exist yet is rejected too', {
   assert.equal(files.safePath('link/new/deep/file.txt'), null);
   assert.ok(files.safePath('plain/new/file.txt'));
 });
+
+test('withServerPort replaces or appends only the port line', () => {
+  const { withServerPort } = require('../modules/properties');
+  assert.equal(withServerPort('motd=hi\nserver-port=1111\nmax-players=7\n', 25565), 'motd=hi\nserver-port=25565\nmax-players=7\n');
+  assert.equal(withServerPort('motd=hi\r\nserver-port=1111\r\nmax-players=7\r\n', 25610), 'motd=hi\r\nserver-port=25610\r\nmax-players=7\r\n');
+  assert.equal(withServerPort('motd=hi', 25565), 'motd=hi\nserver-port=25565\n');
+  assert.equal(withServerPort('', 25565), 'server-port=25565\n');
+  assert.equal(withServerPort('x=1\nquery.port=1111\n', 25565), 'x=1\nquery.port=1111\nserver-port=25565\n');
+});
