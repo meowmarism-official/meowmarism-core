@@ -3,6 +3,8 @@ const modrinth = require('./modrinth');
 
 const SORTS = new Set(['relevance', 'downloads', 'follows', 'newest', 'updated']);
 const LOADERS = new Set(['fabric', 'forge', 'neoforge', 'quilt']);
+// Environments that may run on a dedicated server; client_only, singleplayer_only and unknown are left out.
+const SERVER_ENVIRONMENTS = ['client_and_server', 'server_only', 'server_only_client_optional', 'dedicated_server_only', 'client_only_server_optional', 'client_or_server', 'client_or_server_prefers_both'];
 const ID = /^[\w-]{1,64}$/;
 const MC_VERSION = /^[\w.+-]{1,32}$/;
 const PAGE = 20;
@@ -13,7 +15,7 @@ function createModpackApi({ request = modrinth.request, api = modrinth.API } = {
   const idOf = (value) => { if (!ID.test(String(value || ''))) throw fail('invalid modpack id'); return String(value); };
 
   async function searchModpacks({ query = '', offset = 0, sort = 'relevance', loader = '', mcVersion = '' } = {}) {
-    const facets = [['project_type:modpack'], ['server_side!=unsupported']];
+    const facets = [['project_type:modpack'], SERVER_ENVIRONMENTS.map((e) => `environment:${e}`)];
     if (LOADERS.has(loader)) facets.push([`categories:${loader}`]);
     if (mcVersion) { if (!MC_VERSION.test(mcVersion)) throw fail('invalid Minecraft version'); facets.push([`versions:${mcVersion}`]); }
     const url = `${api}/search?query=${encodeURIComponent(String(query).slice(0, 100))}&limit=${PAGE}&offset=${Math.max(0, Number(offset) || 0)}`
@@ -24,7 +26,7 @@ function createModpackApi({ request = modrinth.request, api = modrinth.API } = {
       hits: ((d && d.hits) || []).map((h) => ({
         id: h.project_id, slug: h.slug, title: h.title, description: h.description, icon: h.icon_url || '',
         author: h.author, downloads: h.downloads, follows: h.follows, categories: h.display_categories || h.categories || [],
-        mcVersions: h.versions || [], updated: h.date_modified,
+        mcVersions: h.versions || [], environment: h.environment || [], updated: h.date_modified,
       })),
     };
   }
@@ -40,8 +42,9 @@ function createModpackApi({ request = modrinth.request, api = modrinth.API } = {
     };
   }
 
-  // A version is offered only when it carries a .mrpack file on Modrinth's CDN with a SHA-512 and a size.
+  // A version is offered only when its own environment allows a server and it carries a .mrpack on Modrinth's CDN with a SHA-512 and a size.
   function toVersion(v) {
+    if (!v || !SERVER_ENVIRONMENTS.includes(v.environment)) return null;
     const files = v.files || [];
     const file = files.find((f) => f.primary && /\.mrpack$/i.test(f.filename || '')) || files.find((f) => /\.mrpack$/i.test(f.filename || ''));
     if (!file || !file.hashes || !file.hashes.sha512 || !Number.isInteger(file.size)) return null;
@@ -50,7 +53,7 @@ function createModpackApi({ request = modrinth.request, api = modrinth.API } = {
     if (host !== 'cdn.modrinth.com') return null;
     return {
       id: v.id, projectId: v.project_id, name: v.name, versionNumber: v.version_number, type: v.version_type,
-      mcVersions: v.game_versions || [], loaders: (v.loaders || []).filter((l) => LOADERS.has(l)),
+      environment: v.environment, mcVersions: v.game_versions || [], loaders: (v.loaders || []).filter((l) => LOADERS.has(l)),
       published: v.date_published, downloads: v.downloads,
       file: { url: file.url, filename: file.filename, size: file.size, sha512: file.hashes.sha512 },
     };
