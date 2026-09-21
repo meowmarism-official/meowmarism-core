@@ -137,3 +137,23 @@ test('startup timer: counts from the start request to ready', async () => {
   assert.equal(timers.info('a').readyAt, null);
   assert.equal(timers.ready('b', 7000), 7000);
 });
+
+test('server icon: accepts only 64x64 PNGs and can be reset', () => {
+  const { createServerIcon } = require('../modules/server-icon');
+  const dir = tmp();
+  const def = path.join(dir, 'default.png');
+  const png = (w, h) => {
+    const b = Buffer.alloc(40);
+    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]).copy(b);
+    b.writeUInt32BE(w, 16); b.writeUInt32BE(h, 20);
+    return b.toString('base64');
+  };
+  fs.writeFileSync(def, 'default');
+  const icon = createServerIcon({ dir, defaultIcon: def });
+  assert.throws(() => icon.apply({ png: 'not a png' }), /not a PNG/);
+  assert.throws(() => icon.apply({ png: png(32, 32) }), /64x64/);
+  assert.equal(icon.apply({ png: png(64, 64) }), 'changed');
+  assert.equal(icon.exists(), true);
+  assert.equal(icon.apply({ reset: true }), 'reset to the meowmarism icon');
+  assert.equal(fs.readFileSync(icon.file, 'utf8'), 'default');
+});
