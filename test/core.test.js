@@ -157,3 +157,12 @@ test('server icon: accepts only 64x64 PNGs and can be reset', () => {
   assert.equal(icon.apply({ reset: true }), 'reset to the meowmarism icon');
   assert.equal(fs.readFileSync(icon.file, 'utf8'), 'default');
 });
+
+test('files: a path behind a symlink that does not exist yet is rejected too', { skip: process.platform === 'win32' }, () => {
+  const root = tmp();
+  const outside = tmp();
+  fs.symlinkSync(outside, path.join(root, 'link'));
+  const files = createFiles({ root });
+  assert.equal(files.safePath('link/new/deep/file.txt'), null);
+  assert.ok(files.safePath('plain/new/file.txt'));
+});
