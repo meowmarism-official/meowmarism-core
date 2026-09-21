@@ -23,7 +23,7 @@ for (const name of ['cpSync', 'renameSync', 'copyFileSync', 'rmSync', 'writeFile
 process.on('exit', () => { if (process.env.OPS_FILE) original_write(process.env.OPS_FILE, String(ops)); });
 const original_write = fs.writeFileSync.bind(fs);
 
-const { createUpdater } = require('../../modules/updater');
+const { createUpdater } = require('../modules/updater');
 const log = (line) => fs.appendFileSync(process.env.HOOK_LOG, line + '\n');
 const updater = createUpdater({
   repo: 'test/repo',

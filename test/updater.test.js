@@ -6,7 +6,7 @@ const path = require('path');
 const http = require('http');
 const { spawn, spawnSync } = require('child_process');
 
-const RUNNER = path.join(__dirname, 'helpers', 'update-runner.js');
+const RUNNER = path.join(__dirname, '..', 'test-support', 'update-runner.js');
 const OLD_VERSION = '0.3.8.2';
 const NEW_VERSION = '0.3.9';
 
