@@ -160,3 +160,25 @@ test('a backup that cannot start a tar process ends cleanly', unix, async () => 
   assert.equal(s.api.state.backupInProgress, false);
   assert.ok(s.api.state.lastBackupError);
 });
+
+test('save-off answering false cancels the backup without sending save-on', unix, async () => {
+  const s = backupSetup({ 'world/level.dat': 'x' });
+  s.deps.runtime.isReady = () => true;
+  s.deps.runtime.command = (c) => { s.commands.push(c); return false; };
+  assert.equal(await s.api.createBackup('test', s.deps), false);
+  assert.deepEqual(s.commands, ['save-off']);
+  assert.equal(s.api.state.backupInProgress, false);
+  assert.equal(s.api.listBackups().length, 0);
+  assert.match(s.api.state.lastBackupError, /could not disable world saving/);
+});
+
+test('save-all flush answering false cancels the backup and still sends save-on', unix, async () => {
+  const s = backupSetup({ 'world/level.dat': 'x' });
+  s.deps.runtime.isReady = () => true;
+  s.deps.runtime.command = (c) => { s.commands.push(c); return c === 'save-all flush' ? false : undefined; };
+  assert.equal(await s.api.createBackup('test', s.deps), false);
+  assert.deepEqual(s.commands, ['save-off', 'save-all flush', 'save-on']);
+  assert.equal(s.api.state.backupInProgress, false);
+  assert.equal(s.api.listBackups().length, 0, 'no archive without a flush');
+  assert.match(s.api.state.lastBackupError, /could not flush/);
+});
