@@ -119,3 +119,44 @@ test('scheduler: the capability an action needs is fixed', () => {
   const needs = { backup: 'backups', restart: 'power', stop: 'power', start: 'power', command: 'console' };
   assert.deepEqual(scheduler.ACTION_CAP, needs);
 });
+
+test('a failing world flush still turns saving back on and ends the backup', unix, async () => {
+  const s = backupSetup({ 'world/level.dat': 'x' });
+  s.deps.runtime.isReady = () => true;
+  s.deps.runtime.command = (c) => { s.commands.push(c); if (c === 'save-all flush') throw new Error('rcon dropped'); };
+  assert.equal(await s.api.createBackup('test', s.deps), false);
+  assert.deepEqual(s.commands, ['save-off', 'save-all flush', 'save-on']);
+  assert.equal(s.api.state.backupInProgress, false);
+  assert.match(s.api.state.lastBackupError, /rcon dropped/);
+  assert.ok(s.lines.some((l) => l.includes('backup failed')));
+});
+
+test('a failing save-off does not send save-on and ends the backup', unix, async () => {
+  const s = backupSetup({ 'world/level.dat': 'x' });
+  s.deps.runtime.isReady = () => true;
+  s.deps.runtime.command = (c) => { s.commands.push(c); throw new Error('rcon down'); };
+  assert.equal(await s.api.createBackup('test', s.deps), false);
+  assert.deepEqual(s.commands, ['save-off']);
+  assert.equal(s.api.state.backupInProgress, false);
+});
+
+test('reporting problems after the archive was written do not leave saving off or the backup running', unix, async () => {
+  const s = backupSetup({ 'world/level.dat': 'x' });
+  s.deps.runtime.isReady = () => true;
+  s.deps.pushTimeline = () => { throw new Error('timeline broke'); };
+  assert.equal(await s.api.createBackup('test', s.deps), true, 'the archive exists, so the backup counts');
+  assert.equal(s.commands[s.commands.length - 1], 'save-on');
+  assert.equal(s.api.state.backupInProgress, false);
+  assert.equal(s.api.listBackups().length, 1);
+});
+
+test('a backup that cannot start a tar process ends cleanly', unix, async () => {
+  const s = backupSetup({ 'world/level.dat': 'x' });
+  s.deps.runtime.isReady = () => true;
+  const saved = process.env.PATH;
+  process.env.PATH = path.join(s.dir, 'no-such-bin');
+  try { assert.equal(await s.api.createBackup('test', s.deps), false); } finally { process.env.PATH = saved; }
+  assert.deepEqual(s.commands, ['save-off', 'save-all flush', 'save-on']);
+  assert.equal(s.api.state.backupInProgress, false);
+  assert.ok(s.api.state.lastBackupError);
+});
