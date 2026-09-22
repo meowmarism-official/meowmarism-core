@@ -50,6 +50,11 @@ function syncTarget(targetArg, withAssets) {
   let commit = null;
   try { commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root }).toString().trim(); } catch (_) {}
   const version = require(path.join(root, 'package.json')).version;
+  if (withAssets && fs.existsSync(path.join(target, 'panel'))) {
+    // The running panel reads its core version from here, because core.lock sits outside panel/ and is not part of a self-update.
+    fs.writeFileSync(path.join(target, 'panel', 'core', 'core.json'), JSON.stringify({ version, commit }, null, 2) + '\n');
+    files.push('panel/core/core.json');
+  }
   fs.writeFileSync(path.join(target, 'core.lock'), JSON.stringify({ core: 'meowmarism-core', version, commit, files }, null, 2) + '\n');
   console.log(`synced meowmarism-core ${version}${commit ? ' (' + commit.slice(0, 7) + ')' : ''} -> ${target} (${files.length} files)`);
 }

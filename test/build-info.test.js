@@ -65,5 +65,23 @@ test('without git and without a stamp it is a dev build with no commit', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'meow-build-plain-'));
   write(path.join(dir, 'package.json'), JSON.stringify({ version: '1.2.3.4' }));
   write(path.join(dir, 'panel', 'build.json'), '{"commit":"$Format:%h$"}');
-  assert.deepEqual(getBuildInfo(dir), { version: '1.2.3.4', channel: 'dev', commit: null, label: '1.2.3.4-dev' });
+  assert.deepEqual(getBuildInfo(dir), { version: '1.2.3.4', channel: 'dev', commit: null, core: null, label: '1.2.3.4-dev' });
+});
+
+test('the core version comes from panel/core/core.json and is shortened to 8 characters', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'meow-core-info-'));
+  write(path.join(dir, 'package.json'), JSON.stringify({ version: '0.3.10' }));
+  write(path.join(dir, 'panel', 'core', 'core.json'), JSON.stringify({ version: '0.0.12', commit: 'abcdef0123456789abcdef0123456789abcdef01' }));
+  assert.deepEqual(getBuildInfo(dir).core, { version: '0.0.12', commit: 'abcdef01' });
+});
+
+test('a missing or odd core.json means no core info and never breaks the build info', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'meow-core-info-'));
+  write(path.join(dir, 'package.json'), JSON.stringify({ version: '0.3.10' }));
+  assert.equal(getBuildInfo(dir).core, null);
+  write(path.join(dir, 'panel', 'core', 'core.json'), '{not json');
+  assert.equal(getBuildInfo(dir).core, null);
+  write(path.join(dir, 'panel', 'core', 'core.json'), JSON.stringify({ version: '0.0.12', commit: 'not a hash' }));
+  assert.deepEqual(getBuildInfo(dir).core, { version: '0.0.12', commit: null });
+  assert.equal(getBuildInfo(dir).version, '0.3.10');
 });
