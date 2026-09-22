@@ -41,8 +41,9 @@ const mode = process.argv[2];
     await new Promise((resolve) => setTimeout(resolve, Number(process.env.WAIT_MS) || 800));
     process.exit(0);
   }
-  const first = updater.start();
-  const second = updater.start();
+  const kind = process.env.UPDATE_KIND || undefined;
+  const first = updater.start(kind);
+  const second = updater.start(kind);
   console.log(JSON.stringify({ started: first, second }));
   for (let i = 0; i < 400; i++) {
     const s = updater.status();

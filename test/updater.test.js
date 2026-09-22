@@ -262,3 +262,170 @@ test('wherever the rollback itself fails, the install is never left without a wo
   }
   assert.deepEqual(problems, [], problems.join('\n'));
 });
+
+// ---- core-only updates: product code (panel/controller.js) is never touched, only panel/core/ and core.lock ----
+
+const OLD_CORE = { version: '0.0.13', commit: '1111111122222222333333334444444455555555' };
+const NEW_CORE = { version: '0.0.14', commit: '6666666677777777888888889999999900000000' };
+const lockJson = (core) => JSON.stringify({ core: 'meowmarism-core', version: core.version, commit: core.commit, files: [] });
+
+function withCore(w, core = OLD_CORE) {
+  write(path.join(w.install, 'core.lock'), lockJson(core));
+  write(path.join(w.install, 'panel', 'core', 'core.json'), JSON.stringify({ version: core.version, commit: core.commit }));
+  write(path.join(w.install, 'panel', 'core', 'modules', 'marker.js'), "module.exports = 'old';\n");
+  return w;
+}
+
+// A repo tarball like GitHub's branch archive: one top-level folder with core.lock and panel/core/.
+function coreTarball(w, { core = NEW_CORE, missingCore = false, missingLock = false, truncate = false, name = 'core.tar.gz' } = {}) {
+  const src = path.join(w.root, 'src-' + name);
+  const top = path.join(src, 'meowmarism-test-master');
+  if (!missingLock) write(path.join(top, 'core.lock'), lockJson(core));
+  if (!missingCore) write(path.join(top, 'panel', 'core', 'modules', 'marker.js'), "module.exports = 'new';\n");
+  else write(path.join(top, 'README.md'), 'no core here');
+  const out = path.join(w.root, name);
+  const r = spawnSync('tar', ['-czf', out, '-C', src, 'meowmarism-test-master']);
+  assert.equal(r.status, 0, String(r.stderr));
+  if (truncate) fs.writeFileSync(out, fs.readFileSync(out).subarray(0, Math.floor(fs.statSync(out).size / 2)));
+  return out;
+}
+
+// The invariant for a core-only run: the whole install is exactly the pre-update core, product code untouched.
+async function assertOldCoreIntact(w, beforeLock, beforeCore, controllerBody) {
+  assert.deepEqual(listing(w), ['core.lock', 'package.json', 'panel'], `leftovers: ${listing(w).join(', ')}`);
+  assert.deepEqual(fs.readdirSync(path.join(w.install, 'panel')).sort(), ['controller.js', 'core', 'data.txt', 'lib'], `panel leftovers: ${fs.readdirSync(path.join(w.install, 'panel')).sort().join(', ')}`);
+  assert.equal(read(path.join(w.install, 'core.lock')), beforeLock);
+  assert.deepEqual(snapshot(path.join(w.install, 'panel', 'core')), beforeCore);
+  assert.equal(JSON.parse(read(path.join(w.install, 'package.json'))).version, OLD_VERSION, 'the product version is untouched by a core-only update');
+  assert.equal(await serves(w), controllerBody);
+  assert.deepEqual(fs.readdirSync(w.tmp), [], 'temporary folders were left in TMPDIR');
+}
+
+function coreRun(w, extra = {}) {
+  return run(w, 'update', { UPDATE_KIND: 'core', ...extra });
+}
+
+test('a core-only update installs the new panel/core and core.lock, keeps the old until healthy, then cleans up', unix, async () => {
+  const w = world();
+  withCore(w);
+  const tar = coreTarball(w);
+  const r = coreRun(w, { MEOW_UPDATE_CORE_TARBALL: tar });
+  assert.equal(r.code, 0, r.stderr);
+  assert.equal(r.error, null, r.error);
+  assert.deepEqual(hooks(w), ['stop']);
+  assert.equal(JSON.parse(read(path.join(w.install, 'core.lock'))).version, NEW_CORE.version);
+  assert.equal(JSON.parse(read(path.join(w.install, 'core.lock'))).commit, NEW_CORE.commit);
+  assert.equal(read(path.join(w.install, 'panel', 'core', 'modules', 'marker.js')), "module.exports = 'new';\n");
+  assert.equal(JSON.parse(read(path.join(w.install, 'package.json'))).version, OLD_VERSION, 'the product version does not change');
+  assert.equal(await serves(w), 'OLD', 'the product controller is untouched and still runs');
+  assert.deepEqual(fs.readdirSync(path.join(w.install, 'panel')).sort(), ['controller.js', 'core', 'core.old', 'data.txt', 'lib']);
+  assert.equal(JSON.parse(read(marker(w))).type, 'core');
+  assert.equal(JSON.parse(read(marker(w))).to, `${NEW_CORE.version} (${NEW_CORE.commit.slice(0, 8)})`);
+  assert.deepEqual(fs.readdirSync(w.tmp), []);
+
+  const boot = run(w, 'boot', { WAIT_MS: '900' });
+  assert.equal(boot.code, 0);
+  assert.deepEqual(fs.readdirSync(path.join(w.install, 'panel')).sort(), ['controller.js', 'core', 'data.txt', 'lib'], 'after a healthy run the old core is removed');
+  assert.equal(fs.existsSync(path.join(w.install, 'core.lock.old')), false);
+  assert.equal(fs.existsSync(marker(w)), false);
+  fs.rmSync(w.root, { recursive: true, force: true });
+});
+
+test('a core update with the wrong layout is refused', unix, async () => {
+  for (const options of [{ missingCore: true }, { missingLock: true }]) {
+    const w = world();
+    withCore(w);
+    const beforeLock = read(path.join(w.install, 'core.lock'));
+    const beforeCore = snapshot(path.join(w.install, 'panel', 'core'));
+    const r = coreRun(w, { MEOW_UPDATE_CORE_TARBALL: coreTarball(w, options) });
+    assert.match(r.error, /unexpected core layout/, JSON.stringify(options));
+    assert.deepEqual(hooks(w), []);
+    await assertOldCoreIntact(w, beforeLock, beforeCore, 'OLD');
+    fs.rmSync(w.root, { recursive: true, force: true });
+  }
+});
+
+test('a broken or incomplete core download leaves no half installed state', unix, async () => {
+  const w = world();
+  withCore(w);
+  const beforeLock = read(path.join(w.install, 'core.lock'));
+  const beforeCore = snapshot(path.join(w.install, 'panel', 'core'));
+  const r = coreRun(w, { MEOW_UPDATE_CORE_TARBALL: coreTarball(w, { truncate: true }) });
+  assert.match(r.error, /could not extract|layout|syntax/);
+  assert.deepEqual(hooks(w), []);
+  await assertOldCoreIntact(w, beforeLock, beforeCore, 'OLD');
+  fs.rmSync(w.root, { recursive: true, force: true });
+});
+
+test('a core update whose panel does not start any more is rolled back at once and the servers come back', unix, async () => {
+  const w = world();
+  withCore(w);
+  write(path.join(w.install, 'panel', 'controller.js'), CONTROLLERS.crash);
+  const beforeLock = read(path.join(w.install, 'core.lock'));
+  const beforeCore = snapshot(path.join(w.install, 'panel', 'core'));
+  const r = coreRun(w, { MEOW_UPDATE_CORE_TARBALL: coreTarball(w) });
+  assert.match(r.error, /failed its start test/);
+  assert.deepEqual(hooks(w), ['stop', 'restore:token-1']);
+  await assertOldCoreIntact(w, beforeLock, beforeCore, null);
+  const result = JSON.parse(read(resultFile(w)));
+  assert.equal(result.rolledBack, true);
+  assert.equal(result.type, 'core');
+  assert.equal(fs.existsSync(marker(w)), false);
+  fs.rmSync(w.root, { recursive: true, force: true });
+});
+
+test('a core update that keeps the panel crashing on startup is rolled back after the boot limit', unix, async () => {
+  const w = world();
+  withCore(w);
+  run(w, 'update', { UPDATE_KIND: 'core', MEOW_UPDATE_CORE_TARBALL: coreTarball(w) });
+  assert.equal(JSON.parse(read(path.join(w.install, 'core.lock'))).version, NEW_CORE.version);
+  write(path.join(w.install, 'panel', 'controller.js'), CONTROLLERS.crash);
+  for (let boot = 1; boot <= 3; boot++) {
+    const r = run(w, 'boot', { WAIT_MS: '50' });
+    assert.equal(r.code, 0, `boot ${boot} still runs the new core`);
+    assert.equal(JSON.parse(read(marker(w))).boots, boot);
+  }
+  const fourth = run(w, 'boot', { WAIT_MS: '50' });
+  assert.equal(fourth.code, 1);
+  assert.equal(fs.existsSync(marker(w)), false);
+  const result = JSON.parse(read(resultFile(w)));
+  assert.equal(result.rolledBack, true);
+  assert.equal(result.type, 'core');
+  assert.equal(JSON.parse(read(path.join(w.install, 'core.lock'))).version, OLD_CORE.version, 'core.lock points at the old core again');
+  assert.equal(read(path.join(w.install, 'panel', 'core', 'modules', 'marker.js')), "module.exports = 'old';\n");
+  assert.equal(fs.existsSync(path.join(w.install, 'core.lock.old')), false);
+  fs.rmSync(w.root, { recursive: true, force: true });
+});
+
+test('wherever a core-only update fails, the old core is complete, or the new one is - never a mix, and core.lock always matches', unix, async () => {
+  const dry = world();
+  withCore(dry);
+  coreRun(dry, { MEOW_UPDATE_CORE_TARBALL: coreTarball(dry), OPS_FILE: path.join(dry.root, 'ops') });
+  const total = Number(read(path.join(dry.root, 'ops')));
+  assert.ok(total >= 6, `expected at least 6 file operations, saw ${total}`);
+  fs.rmSync(dry.root, { recursive: true, force: true });
+
+  const problems = [];
+  for (let at = 1; at <= total; at++) {
+    const w = world();
+    withCore(w);
+    const r = coreRun(w, { MEOW_UPDATE_CORE_TARBALL: coreTarball(w), FAULT_AT: String(at) });
+    try {
+      const lockVersion = JSON.parse(read(path.join(w.install, 'core.lock'))).version;
+      const markerBody = read(path.join(w.install, 'panel', 'core', 'modules', 'marker.js'));
+      if (r.error) {
+        assert.equal(lockVersion, OLD_CORE.version, `fault at ${at}: core.lock should still be old`);
+        assert.equal(markerBody, "module.exports = 'old';\n", `fault at ${at}: core files should still be old`);
+      } else {
+        assert.equal(lockVersion, NEW_CORE.version, `fault at ${at}: reported success, so core.lock should be new`);
+        assert.equal(markerBody, "module.exports = 'new';\n", `fault at ${at}: reported success, so core files should be new`);
+        assert.equal(await serves(w), 'OLD', `fault at ${at}: the product controller is never touched`);
+      }
+      assert.ok(fs.existsSync(path.join(w.install, 'panel', 'controller.js')), `fault at ${at}: the panel folder must never disappear`);
+    } catch (err) {
+      problems.push(`fault at operation ${at}: ${err.message.split('\n')[0]}`);
+    }
+    fs.rmSync(w.root, { recursive: true, force: true });
+  }
+  assert.deepEqual(problems, [], problems.join('\n'));
+});
