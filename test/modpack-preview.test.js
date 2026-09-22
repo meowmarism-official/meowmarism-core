@@ -19,12 +19,14 @@ const pack = makeZip({
 });
 const version = { id: 'v1', projectId: 'p1', versionNumber: '4.12', file: { url: 'https://cdn.modrinth.com/data/p1/v1/atm.mrpack', filename: 'atm.mrpack', size: pack.length, sha512: 'z' } };
 
-function setup() {
+const noEnvironments = async () => ({});
+
+function setup(request = noEnvironments) {
   const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'meow-prev-'));
   const calls = { version: 0, download: 0 };
   const api = { getVersion: async (id) => { calls.version++; if (id !== 'v1') throw new Error('no such version'); return version; } };
   const download = async (url, dest) => { calls.download++; fs.writeFileSync(dest, pack); };
-  return { preview: createModpackPreview({ api, download, tmpRoot }).preview, calls, tmpRoot };
+  return { preview: createModpackPreview({ api, download, tmpRoot, request }).preview, calls, tmpRoot };
 }
 
 test('a version is described without installing anything', async () => {
@@ -46,7 +48,28 @@ test('previews are cached per version', async () => {
 test('a failing download or a broken pack leaves nothing behind', async () => {
   const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'meow-prev-'));
   const api = { getVersion: async () => version };
-  await assert.rejects(createModpackPreview({ api, download: async () => { throw new Error('checksum mismatch'); }, tmpRoot }).preview('v1'), /checksum mismatch/);
-  await assert.rejects(createModpackPreview({ api, download: async (u, dest) => fs.writeFileSync(dest, 'not a zip at all, just text'), tmpRoot }).preview('v1'), /modpack rejected/);
+  await assert.rejects(createModpackPreview({ api, request: noEnvironments, download: async () => { throw new Error('checksum mismatch'); }, tmpRoot }).preview('v1'), /checksum mismatch/);
+  await assert.rejects(createModpackPreview({ api, request: noEnvironments, download: async (u, dest) => fs.writeFileSync(dest, 'not a zip at all, just text'), tmpRoot }).preview('v1'), /modpack rejected/);
   assert.deepEqual(fs.readdirSync(tmpRoot), []);
+});
+
+test('mods Modrinth calls client-only are left out of the summary, with the reason visible', async () => {
+  const asked = [];
+  const { preview } = setup(async (method, url, body) => { asked.push(url); return { [HASH]: { environment: 'client_only' } }; });
+  const s = await preview('v1');
+  assert.deepEqual(s.environmentSkipped, [{ path: 'mods/a.jar', environment: 'client_only' }]);
+  assert.equal(s.environmentSkippedCount, 1);
+  assert.equal(s.modCount, 0, 'the skipped mod is not counted');
+  assert.equal(s.downloadBytes, 0);
+  assert.equal(s.managedCount, 1, 'run.sh is still reported as managed by Meowmarism');
+  assert.ok(s.skipped.includes('mods/a.jar'));
+  assert.equal(asked.length, 1);
+});
+
+test('a failing Modrinth lookup does not fail the preview', async () => {
+  const { preview } = setup(async () => { throw new Error('offline'); });
+  const s = await preview('v1');
+  assert.equal(s.modCount, 1);
+  assert.equal(s.environmentLookupFailed, true);
+  assert.deepEqual(s.environmentSkipped, []);
 });
