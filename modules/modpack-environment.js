@@ -23,7 +23,8 @@ async function resolveEnvironments(inspected, { request = modrinth.request, api 
       for (const h of batch) if (map && map[h]) found.set(h, map[h]);
     } catch (err) {
       report.failed = true;
-      log(`Could not ask Modrinth about ${batch.length} mods (${err.message}), keeping the pack declaration`);
+      const inBatch = new Set(batch);
+      log(`Could not ask Modrinth about ${candidates.filter((f) => inBatch.has(f.sha512)).length} mods (${err.message}), keeping the pack declaration`);
     }
   }
 
