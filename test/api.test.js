@@ -168,3 +168,22 @@ test('optional features are saved by name and survive a reload and a plain trust
   assert.strictEqual(createPanelSettings({ file }).feature('api'), true, 'a save without features keeps them');
   assert.strictEqual(createPanelSettings({ file }).load().trustProxy, true);
 });
+
+test('a token can be edited and renewed; renewing replaces the secret and keeps the settings', () => {
+  let clock = 1000;
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'apiedit-'));
+  const tokens = createApiTokens({ file: path.join(dir, 't.json'), now: () => clock });
+  const made = tokens.create({ name: 'bot', scopes: ['read'], expiresInDays: 30 });
+  const edited = tokens.update(made.id, { name: 'bot2', scopes: ['read', 'power'], instances: ['a'] });
+  assert.deepStrictEqual([edited.name, edited.scopes, edited.instances, edited.expiresAt], ['bot2', ['read', 'power'], ['a'], made.expiresAt]);
+  assert.strictEqual(tokens.update(made.id, { expiresInDays: null }).expiresAt, null);
+  assert.throws(() => tokens.update(made.id, { scopes: [] }), /scope/);
+  assert.strictEqual(tokens.update('nope', {}), null);
+  assert.ok(tokens.verify(made.token), 'the secret still works after an edit');
+  clock = 5000;
+  const renewed = tokens.renew(made.id);
+  assert.notStrictEqual(renewed.token, made.token);
+  assert.strictEqual(tokens.verify(made.token), null);
+  assert.deepStrictEqual([tokens.verify(renewed.token).id, tokens.verify(renewed.token).renewedAt], [made.id, 5000]);
+  assert.strictEqual(tokens.renew('nope'), null);
+});
