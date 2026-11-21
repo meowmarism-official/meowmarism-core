@@ -433,7 +433,9 @@
   "This server": "Ce serveur",
   "Whole network": "Tout le réseau",
   "Search, install, update and switch mods and plugins": "Rechercher, installer, mettre à jour et activer mods et plugins",
-  "Create, upgrade and delete instances and link servers to a proxy": "Créer, mettre à jour et supprimer des instances et relier des serveurs à un proxy"
+  "Create, upgrade and delete instances and link servers to a proxy": "Créer, mettre à jour et supprimer des instances et relier des serveurs à un proxy",
+  "Databases": "Bases de données",
+  "Not created": "Non créée"
  },
  "patterns": [
   [
