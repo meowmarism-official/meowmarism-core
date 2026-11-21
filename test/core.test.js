@@ -175,3 +175,13 @@ test('withServerPort replaces or appends only the port line', () => {
   assert.equal(withServerPort('', 25565), 'server-port=25565\n');
   assert.equal(withServerPort('x=1\nquery.port=1111\n', 25565), 'x=1\nquery.port=1111\nserver-port=25565\n');
 });
+
+test('a Velocity proxy log is tracked as joins and leaves', () => {
+  const { createPlayerTracker } = require('../modules/players');
+  const tracker = createPlayerTracker();
+  tracker.parseLine('[01:02:03 INFO]: [connected player] Steve (/127.0.0.1:55501) has connected');
+  tracker.parseLine('[01:02:04 INFO]: [connected player] Alex (<ip address withheld>) has connected');
+  assert.deepStrictEqual(tracker.stats().list.map((p) => p.name), ['Alex', 'Steve']);
+  tracker.parseLine('[01:09:00 INFO]: [connected player] Steve (/127.0.0.1:55501) has disconnected');
+  assert.deepStrictEqual(tracker.stats().list.map((p) => p.name), ['Alex']);
+});
