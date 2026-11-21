@@ -373,7 +373,8 @@
   "needs a forwarding mod, which the panel does not set up yet": "nécessite un mod de transfert, que le panneau ne configure pas encore",
   "automatic setup needs Minecraft 1.19 or newer": "la configuration automatique nécessite Minecraft 1.19 ou plus",
   "a proxy cannot sit behind another proxy": "un proxy ne peut pas être derrière un autre proxy",
-  "start this server once so it creates its configuration, then apply again": "démarrez ce serveur une fois pour qu’il crée sa configuration, puis appliquez à nouveau"
+  "start this server once so it creates its configuration, then apply again": "démarrez ce serveur une fois pour qu’il crée sa configuration, puis appliquez à nouveau",
+  "Read and change the databases of the servers it may access": "Lire et modifier les bases de données des serveurs autorisés"
  },
  "patterns": [
   [
