@@ -185,3 +185,20 @@ test('a Velocity proxy log is tracked as joins and leaves', () => {
   tracker.parseLine('[01:09:00 INFO]: [connected player] Steve (/127.0.0.1:55501) has disconnected');
   assert.deepStrictEqual(tracker.stats().list.map((p) => p.name), ['Alex']);
 });
+
+test('users api: a member with the users right can only grant what they have', async () => {
+  const { createUserStore } = require('../modules/users');
+  const store = createUserStore(path.join(tmp(), 'users.json'));
+  store.createMember('mod', 'longenough1', { panel: { users: true, create: true }, access: { global: ['view', 'console'], instances: {} } });
+  const api = createUsersApi({ store, session: () => ({ username: 'mod', role: 'member' }) });
+  const call = (method, url, body) => new Promise((resolve) => {
+    const req = Readable.from([Buffer.from(JSON.stringify(body))]);
+    Object.assign(req, { method, url, headers: {} });
+    api.handle(req, { writeHead() {}, end: resolve }, new URL(url, 'http://localhost'));
+  });
+  await call('POST', '/api/users', { username: 'newbie', password: 'longenough1', panel: { users: true, create: true, update: true }, access: { global: ['files', 'console', 'remove'], instances: { A: ['files', 'view'] } } });
+  const made = store.findUser('newbie');
+  assert.deepEqual(made.panel, { users: false, create: true, update: false });
+  assert.deepEqual(made.access.global, ['view', 'console']);
+  assert.deepEqual(made.access.instances.A, ['view']);
+});
